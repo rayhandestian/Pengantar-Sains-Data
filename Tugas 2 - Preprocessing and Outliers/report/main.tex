@@ -1,0 +1,51 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\title{Preprocessing Data Volume Pengangkutan Sampah}
+\author{Rayhan Surya Destian}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Langkah-Langkah Pra-Pemrosesan Data}
+
+\subsection{Memuat Dataset}
+Dataset dibaca ke dalam DataFrame menggunakan Pandas dengan delimiter titik koma (\texttt{;}).
+
+\subsection{Memeriksa Data}
+Dilakukan inspeksi awal menggunakan \texttt{df.head()}, \texttt{df.info()}, dan \texttt{df.isnull().sum()} untuk memahami struktur data dan mengidentifikasi nilai yang hilang.
+
+\subsection{Menangani Inkonsistensi Satuan}
+Kolom \texttt{satuan\_panjang/luas} diperiksa untuk memastikan konsistensi. Nilai yang hilang diisi dengan 'm' (meter) berdasarkan konteks.
+
+\subsection{Membersihkan Kolom Volume Sampah}
+Entri tidak valid seperti '-' diganti dengan \texttt{NaN} dan dikonversi menjadi tipe data numerik.
+
+\subsection{Mengisi Nilai yang Hilang}
+\begin{itemize}
+    \item \textbf{Volume Sampah}: Nilai yang hilang diisi dengan rata-rata volume per \texttt{kecamatan}.
+    \item \textbf{Panjang/Luas}: Nilai yang hilang diisi dua kali; pertama dengan rata-rata per \texttt{kecamatan}, kemudian dengan rata-rata keseluruhan jika masih ada yang kosong.
+\end{itemize}
+
+\subsection{Mengonversi Tipe Data}
+Pastikan semua kolom memiliki tipe data yang sesuai, seperti integer untuk \texttt{bulan} dan \texttt{tanggal}, serta float untuk \texttt{panjang/luas} dan \texttt{volume\_sampah\_perhari(m3)}.
+
+\subsection{Pemeriksaan Akhir}
+Verifikasi bahwa tidak ada nilai yang hilang tersisa menggunakan \texttt{df.isnull().sum()}.
+
+\section{Diagram Alur Pra-Pemrosesan Data}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.3\linewidth]{preprocessing_diagram.png}
+\caption{Alur Pra-Pemrosesan Data}
+\end{figure}
+
+\end{document}
